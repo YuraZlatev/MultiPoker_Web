@@ -1,0 +1,44 @@
+﻿@model MultiPoker.Models.Player
+@Styles.Render("~/Content/styles.css")
+
+@{ 
+    String image = "";
+    if (Model != null)
+    {
+        if (Model.Avatar != null)
+        {
+            image = Convert.ToBase64String(Model.Avatar);
+        }
+    }
+}
+
+<div id="int_1" style="margin-top:70px; margin-left:800px;" class="text-right animatePlus intClass">
+    @if (Model == null)
+    {
+        <img id="plus_1" src="~/Images/Plus.png" />
+    }
+    else
+    {
+        <div style="position:relative; z-index:3; font-size:10pt; background-color:transparent">
+            @if (Model.Avatar == null)
+            {
+                <img src="~/Images/Default_avatar.png" width="50" height="50" alt="pic" style="border-radius:50%; position:relative; top:-3px;" />
+            }
+            else
+            {
+                <img src="data:image/jpeg;base64,@image" width="50" height="50" alt="pic" style="border-radius:50%; position:relative; top:-3px;" />
+            }
+            <input type="text" readonly value="@Model.Nick" style="position:relative; width:90%; right:10px; border:0px; font-weight:bold; background-color:transparent; color:orange;" class="text-right"/>
+            <img src="~/Images/Chip.png" width="20" height="20" style="position:relative; top:-2px;" />
+            <input type="text" readonly value="@Model.Game.CurrentBalance" style="position:relative; width:85%; border:0px; background-color:transparent; color:orange;" class="text-left" />
+        </div>
+        <div style="position:relative; top:-110px; right:0px; z-index:2; width:150px; height:50px; overflow:hidden;">
+            <img class="card1" />
+            <img class="card2" />
+        </div>
+        <div style="left:-120px; top:-30px; position:relative; visibility:collapse;">
+            <img src="~/Images/Chip.png" width="20" height="20" style="position:relative;"/>
+            <label class="bank">0</label>
+        </div>
+    }
+</div>

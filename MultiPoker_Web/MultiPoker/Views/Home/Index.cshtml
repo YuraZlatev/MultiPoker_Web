@@ -1,0 +1,16 @@
+﻿@Scripts.Render("~/Scripts/mainDoc.js")
+@Styles.Render("~/Content/styles.css")
+
+@{
+    ViewBag.Title = "MultiPoker";
+    ViewBag.Background = "/Images/screenload.jpg";
+}
+
+<div id="mainIndexHome" style="min-height:700px;">
+
+    @if (Request.IsAuthenticated)
+    {
+        <button id="bonus" class="btnBonus"></button>
+    }
+
+</div>

@@ -1,0 +1,60 @@
+﻿@using MultiPoker.Models
+@Styles.Render("~/Content/styles.css")
+
+@model LoginViewModel
+@{
+    ViewBag.Title = "Sign In";
+    ViewBag.Background = "/Images/log-register.jpg";
+}
+
+<br/><br/><br/>
+<h2 style="color:white;">@ViewBag.Title</h2>
+<hr />
+
+<div class="row jumbotron" style="background-color:rgba(0,0,0,0.5); color:white; border:1px solid lime;">
+    <div class="col-md-12">
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8" style = "margin-top:12px;">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control log pokerTextBox" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "col-md-4 control-label" })
+                    <div class="col-md-8" style = "margin-top:12px;">
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control pokerTextBox" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe, new { style="margin-top:-12px; position:absolute;"})
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-4 col-md-8">
+                        <input type="submit" value="Sign In" class="btn btn-primary" />
+                    </div>
+                </div>
+                <p class="pull-right">
+                    @Html.ActionLink("Sign Up", "Register")
+                </p>
+            }
+        </section>
+    </div>
+ 
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,180 @@
+﻿@using MultiPoker.Models;
+@using Microsoft.AspNet.Identity;
+
+@{
+    Layout = null;
+    Room room = ViewBag.Room;
+    bool isIHavePlace = room.mySelf(User.Identity.GetUserId());
+
+    int place = -1;
+    foreach (Player player in room.Players)
+    {
+        if (player.Id == User.Identity.GetUserId())
+        {
+            place = player.Game.Place;
+            break;
+        }
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/styles.css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    <script src="~/Scripts/jquery-1.12.4.min.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.js"></script>
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    <script src="~/Scripts/jquery.signalR-2.2.2.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Scripts/util.js"></script>
+</head>
+<body class="container" style="min-width:1600px; background-image:url('/Images/background_1.jpg'); background-repeat:no-repeat; background-position:center center; background-attachment:fixed; background-size:cover;">
+    <input id="userid" type="hidden" value="@User.Identity.GetUserId()"/>
+    <input id="room" type="hidden" value="@room.RoomId" />
+    <input id="myPlace" type="hidden" value="@isIHavePlace.ToString()"/>
+    <input id="placeNumber" type="hidden" value="@place"/>
+    <input id="currentBigBlind" type="hidden" value="@room.BigBlind"/>
+    <input id="currentBetOfRoom" type="hidden" value="0"/>
+
+    <div style="border-right:1px solid aqua; min-width:400px; width:400px; max-width:400px; height:800px; position:absolute;">
+        <label class="lbl">Room №@room.RoomId</label>
+        <label class="lbl" style="font-size:16pt; font-weight:initial;">Big Blind: @room.BigBlind</label>
+        
+        <div id="allMessages">
+            <div style="height:100%; width:100%;" class="pokerscrollbar"></div>
+        </div>
+        <textarea id="message" placeholder="Message"></textarea>
+        <button id="send" class="btn btn-default">Send</button>
+        @Html.ActionLink("Lobby", "BackToLobby", "Home", new { gameName = room.RoomGame}, new { @class = "btn btn-danger",
+                        style = "position:relative; font-size:16pt; font-weight:bold; top:20px; left:5px;"
+   })
+    </div>
+    <div id="main" style="margin-left:400px; min-width:1250px; width:1250px; max-width:1250px; height:800px; position:absolute;">
+        <img src="~/Images/table.png" height="100%" width="100%" style="position:absolute;" />
+        <img src="~/Images/Diler.png" height="150" width="150" style="margin-top:-20px; margin-left:44%; position:absolute;" />
+
+        <div id="allBanks" style="position:absolute; margin-left:470px; margin-top:200px; width:400px; height:100px;">
+            <div id="bank1" style="position:relative; margin-left:150px; margin-top:0px; display:inline; visibility:collapse;">
+                <img src="~/Images/Chip.png" width="20" height="20" style="position:relative;" />
+                <label class="bank">0</label>
+            </div> <br />
+            <div id="bank2" style="position:relative; margin-left:80px; margin-top:0px; display:inline; visibility:collapse;">
+                <img src="~/Images/Chip.png" width="20" height="20" style="position:relative;" />
+                <label class="bank">0</label>
+            </div>
+            <div id="bank3" style="position:relative; margin-left:100px; margin-top:0px; display:inline; visibility:collapse;">
+                <img src="~/Images/Chip.png" width="20" height="20" style="position:relative;" />
+                <label class="bank">0</label>
+            </div> <br />
+            <div id="bank4" style="position:relative; margin-left:30px; margin-top:0px; display:inline; visibility:collapse;">
+                <img src="~/Images/Chip.png" width="20" height="20" style="position:relative;" />
+                <label class="bank">0</label>
+            </div>
+            <div id="bank5" style="position:relative; margin-left:80px; margin-top:0px; display:inline; visibility:collapse;">
+                <img src="~/Images/Chip.png" width="20" height="20" style="position:relative;" />
+                <label class="bank">0</label>
+            </div>
+            <div id="bank6" style="position:relative; margin-left:80px; margin-top:0px; display:inline; visibility:collapse;">
+                <img src="~/Images/Chip.png" width="20" height="20" style="position:relative;" />
+                <label class="bank">0</label>
+            </div> <br />
+            <div id="bank7" style="position:relative; margin-left:80px; margin-top:0px; display:inline; visibility:collapse;">
+                <img src="~/Images/Chip.png" width="20" height="20" style="position:relative;" />
+                <label class="bank">0</label>
+            </div>
+            <div id="bank8" style="position:relative; margin-left:100px; margin-top:0px; display:inline; visibility:collapse;">
+                <img src="~/Images/Chip.png" width="20" height="20" style="position:relative;" />
+                <label class="bank">0</label>
+            </div>
+        </div>
+
+        <div id="fiveCards" style="position:absolute; margin-left:450px; margin-top:300px; height:100px; width:360px;">
+            <img style="position:relative; margin-left:0px; border:1px solid black;" width="60" height="100"/>
+            <img style="position:relative; margin-left:10px; border:1px solid black;" width="60" height="100" />
+            <img style="position:relative; margin-left:10px; border:1px solid black;" width="60" height="100" />
+            <img style="position:relative; margin-left:10px; border:1px solid black;" width="60" height="100" />
+            <img style="position:relative; margin-left:10px; border:1px solid black;" width="60" height="100" />
+        </div>
+
+        <div id="playerPlace">
+            @for (int i = 0; i < room.Places.Length; i++)
+            {
+                Player player = room.PlayerByPlace(i);
+
+                //не отображать + если за этим местом никого нет и при этом у меня есть игровое место
+                if (player == null && isIHavePlace)
+                {
+                    continue;
+                }
+
+                switch (i)
+                {
+                    case 0: @Html.Partial("Interface/Interface1", player); break;
+                    case 1: @Html.Partial("Interface/Interface2", player); break;
+                    case 2: @Html.Partial("Interface/Interface3", player); break;
+                    case 3: @Html.Partial("Interface/Interface4", player); break;
+                    case 4: @Html.Partial("Interface/Interface5", player); break;
+                    case 5: @Html.Partial("Interface/Interface6", player); break;
+                    case 6: @Html.Partial("Interface/Interface7", player); break;
+                    case 7: @Html.Partial("Interface/Interface8", player); break;
+                    case 8: @Html.Partial("Interface/Interface9", player); break;
+                }
+            }
+        </div>
+
+        <div id="interface" style="position:absolute; width:1200px; height:60px; margin-left:0px; margin-top:750px; visibility:collapse;">
+            <div style="position:relative; width:300px; left:200px; top:25px; background-color:rgba(0,0,0,0.8); border-radius:3px;" class="text-center">
+                <span id="currentBet" style="color:white; font-weight:bold; position:relative;">0</span>
+                <div id="slider"></div>
+            </div>
+            <button id="re-raise" class="interface">Re-raise</button>
+            <button id="raise" class="interface">Raise</button>
+            <button id="call" class="interface">Call</button>
+            <button id="check" class="interface">Check</button>
+            <button id="fold" class="interface">Fold</button>
+            <button id="all-in" class="interface">All-in</button>
+        </div>
+    </div>
+
+    <input id="inputMoney" type="hidden" data-toggle="modal" data-target="#enterModal" />
+    <div class="modal fade" id="enterModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="left:0%;">
+            <div class="modal-content" style="background-color:black; color:white; border:1px solid lime;">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:lime;">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h2 class="modal-title" id="myModalLabel">Buy-in</h2>
+                </div>
+                <div class="modal-body">
+                    <input id="curPlace" type="hidden" value=""/>
+                    <div style="width:100%;">
+                        <span id="min" class="pull-left" style="color:white; font-size:12pt; width:50%"></span>
+                        <span id="max" class="pull-right text-right" style="color:white; font-size:12pt; width:50%"></span>
+                    </div>
+                    <div id="sitSlider" style="margin-top:50px;"></div>
+                    <label style="margin-top:50px;">Balance: <span id="balance"></span> </label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="interface animatePlus" style="left:0px;" data-dismiss="modal">No</button>
+                    <button id="sit" type="button" class="interface animatePlus" style="left:0px;" data-dismiss="modal">Yes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/bootstrap")
+</body>
+</html>

@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/styles.css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body style="min-width:1200px; background-image:url(@ViewBag.Background); background-repeat:no-repeat; background-position:center center; background-attachment:fixed; background-size:cover;">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @Html.ActionLink("MultiPoker", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            @if (Request.IsAuthenticated)
+            {
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#"> Select kind of poker <span class="caret"></span> </a>
+                        <ul class="dropdown-menu" style="border:2px solid silver; background:black;">
+                            @{
+                                MultiPoker.Models.MultiPokerContext db = new MultiPoker.Models.MultiPokerContext();
+                                var kinds = db.Games.ToList();
+                                foreach (MultiPoker.Models.Game game in kinds)
+                                {
+                                    if(game.Name == "Draw Poker")
+                                    {
+                                        continue;
+                                    }
+                                    <li>
+                                        @Html.ActionLink(game.Name, "GameLobby", "Home", new { game_id = game.Id }, new { @class = "text-center", style = "color:orange;" })
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </li>
+                </ul>
+              }
+            <div>
+                @Html.Partial("_LoginPartial")               
+            </div>
+        </div>
+    </div>
+    <div class="container body-content" style="min-width:1200px;">
+        @RenderBody()
+        <hr /> 
+    </div>
+    
+    <footer class="text-center">
+        <p style="color:dodgerblue;">&copy; @DateTime.Now.Year</p>
+    </footer>
+
+    @Scripts.Render("~/Scripts/statistic.js")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

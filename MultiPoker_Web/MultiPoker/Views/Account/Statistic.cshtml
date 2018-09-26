@@ -1,0 +1,106 @@
+﻿@using Microsoft.AspNet.Identity;
+@using MultiPoker.Models;
+@Scripts.Render("~/Scripts/statistic.js");
+@Styles.Render("~/Content/styles.css")
+
+@{
+    ViewBag.Title = "Statistic";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Background = "/Images/statistic.tif";
+}
+
+<style>
+
+    .pokerTextBox[readonly]{
+            background:rgba(0,0,0,0.8);
+            border-color:lime;
+            color:white;
+        }
+
+</style>
+
+@{ 
+    MultiPokerContext db = new MultiPokerContext();
+    String userID = User.Identity.GetUserId();
+    Player player = db.Players.Where(x => x.Id == userID).FirstOrDefault();
+    String exp = player.Experience.ToString() + " / " + (player.Level * 500).ToString();
+    int width = player.Experience * 100 / (player.Level * 500);
+}
+
+<br/><br/>
+
+<div class="form-group" style="color:white; font-size:14pt;">
+    <div class="text-center" style="display:block;">
+        <span style="font-size:18pt;">@player.Level <img style="margin-top:-6px;" src="~/Images/level.png" width="100" height="40" alt="lvl" /> </span>
+    </div>
+    <div class="text-center" style="display:block;margin-top:10px;">
+        <span>@exp</span>
+    </div>
+    <div class="col-md-8 col-md-offset-2" style="margin-top:10px;">
+        <div class="progress text-center" style="background:rgba(0,0,0,0.5); border:1px solid lime;">
+            <div class="progress-bar progress-bar-striped active" role="progressbar" style="width:@width%"></div>
+        </div>
+    </div>
+</div>
+
+<br />
+<hr/>
+
+<div class="form-horizontal jumbotron" style="min-width:1200px; background-color:rgba(0,0,0,0.8); color:white; border:1px solid lime;">
+
+    <div class="form-group text-right">
+        <span class="col-md-2">Kind of Poker:</span>
+        <div class="col-md-10">
+            <select id="gameId" class="form-control pokerSelect">
+                <option value="" style="color:red;">Select kind</option>
+                @foreach (Game game in ViewBag.Games)
+                {
+                    <option value="@game.Id">@game.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="form-group text-right">
+        <span class="col-md-2">Total played:</span>
+        <div class="col-md-10">
+            <input id="totalGames" class="form-control text-right pokerTextBox" type="text" readonly value="0"/>
+        </div>
+    </div>
+
+    <div class="form-group text-right">
+        <span class="col-md-2">Wins:</span>
+        <div class="col-md-10">
+            <input id="wins" class="form-control text-right pokerTextBox" type="text" readonly value="0" />
+        </div>
+    </div>
+
+    <div class="form-group text-right">
+        <span class="col-md-2">Best bank:</span>
+        <div class="col-md-10">
+            <input id="maxGain" class="form-control text-right pokerTextBox" type="text" readonly value="0" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <span class="col-md-2 text-right">Best hand:</span>
+        <div class="col-md-10">
+            <img id="c1" src="~/Images/BlackBack.png" width="60" height="100" alt="card1" />
+            <img id="c2" src="~/Images/BlackBack.png" width="60" height="100" alt="card2" />
+            <img id="c3" src="~/Images/BlackBack.png" width="60" height="100" alt="card3" />
+            <img id="c4" src="~/Images/BlackBack.png" width="60" height="100" alt="card4" />
+            <img id="c5" src="~/Images/BlackBack.png" width="60" height="100" alt="card5" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input id="combination" class="form-control text-center combination" style="background:rgba(0,0,0,0.5);" type="text" readonly value="No Result" />
+        </div>
+    </div>
+
+    <div>
+        <img class="rank" id="rank" src="~/Images/Hand Ranking.jpg" width="100" height="100" />
+    </div>
+
+</div>

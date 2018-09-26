@@ -1,0 +1,62 @@
+﻿@using Microsoft.AspNet.Identity
+@using MultiPoker.Models;
+@Styles.Render("~/Content/styles.css")
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    {
+    @Html.AntiForgeryToken()
+
+    <ul class="nav navbar-nav navbar-right">
+            @{ 
+                String str = "";
+                String image = "";
+                MultiPokerContext db = new MultiPokerContext();
+
+                try
+                {
+                    String userID = User.Identity.GetUserId();
+                    Player player = db.Players.Find(userID);
+                    str = player.Nick;
+                    if (player.Avatar != null)
+                    {
+                        byte[] avatarka = player.Avatar;
+                        image = Convert.ToBase64String(avatarka);
+                    }
+                }
+                catch { str = User.Identity.GetUserName(); }
+
+            }
+
+        <li class="dropdown">
+            @if (image != "")
+            {
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Welcome, @str &nbsp;&nbsp; <img src="data:image/jpeg;base64,@image" width="25" height="25" alt="pic" style="border:1px solid orange;"/> <span class="caret"></span> </a>
+            }
+            else
+            {
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">Welcome, @str &nbsp;&nbsp; <img src="~/Images/Default_avatar.png" width="25" height="25" alt="def" style="border:1px solid orange;"/> <span class="caret"></span> </a>
+            }
+            <ul class="dropdown-menu" style="width:100%; border:2px solid silver; background:black;">
+                <li><a href="@Url.Action("Edit", "Players")" class = "text-center" style="color:orange;"><span class="glyphicon glyphicon-cog"></span> Profile</a></li>
+                <li><a href="@Url.Action("Statistic", "Account")" class = "text-center" style = "color:orange;"><span class="glyphicon glyphicon-stats"></span> Statistic</a></li>
+                <li class="divider"></li>
+                <li><a class="text-center" style="color:orange; font-weight:bold;" href="javascript:document.getElementById('logoutForm').submit()"> <span class="glyphicon glyphicon-log-out"></span> Sign Out </a></li>
+            </ul>
+        </li>
+    </ul>
+
+    }
+}
+else
+{
+    <ul class="nav navbar-nav navbar-right">
+        <li>@Html.ActionLink("Registration", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+        <li><a id="loginLink" href="@Url.Action("Login", "Account")"><span class="glyphicon glyphicon-log-in"></span> Sign In</a></li>
+    </ul>
+}

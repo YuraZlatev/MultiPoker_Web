@@ -1,0 +1,386 @@
+﻿   .btnBonus
+    {
+        position:relative;
+        width:80%;
+        margin-left:10%;
+        margin-top:45%;
+        font-size:100pt;
+        background-color:rgba(0,0,0,1.0);
+        opacity:1.0;
+        color:aqua;
+        border:solid;
+        border-width:1px;
+        border-color:orange;
+        border-radius:3px;
+        font-weight:bold;
+        transition:1s;
+    }
+
+    .btnBonus:hover
+    {
+        transition:1s;
+        border-color:lime;
+        border-width:2px;
+    }
+
+    .btnBonus[disabled]
+    {
+        position:relative;
+        width:80%;
+        margin-left:10%;
+        margin-top:45%;
+        font-size:100pt;
+        background-color:rgba(0,0,0,0.3);
+        opacity:0.3;
+        color:white;
+        border:solid;
+        border-width:1px;
+        border-color:white;
+        border-radius:3px;
+        transition:1s;
+    }
+
+    .btnBonus:hover[disabled]
+    {
+        transition:1s;
+        background-color:rgba(0,0,0,1.0);
+        opacity:1.0;
+    }
+
+    /*------------------------------------------------------------*/
+
+    .rank
+        {
+            margin-left:1000px;
+            margin-top:-800px;
+            transition:1s;
+            -webkit-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+            border:solid;
+            border-width:1px;
+            border-color:lime;
+        }
+
+    .rank:hover
+        {
+            margin-left:800px;
+            margin-top:-400px;
+            transition:2s;
+            -webkit-transform: scale(5);
+            -ms-transform: scale(5);
+            transform: scale(5);
+            border-color:aqua;
+        }
+
+     /*-------------------------------------------------------------*/
+
+    .pokerTextBox
+        {
+            background:rgba(0,0,0,0.8);
+            color:white;
+            border-width:1px;
+            border-color:lime;     
+        }
+
+     .pokerTextBox[readonly]{
+            background:rgba(0,0,0,0.8);
+            border-color:red;
+            color:white;
+        }
+
+    .pokerSelect{
+        background-color:rgba(0,0,0,0.8);
+        color:white;
+        border:solid;
+        border-color:aqua;
+        border-width:1px;
+    }
+
+    #c1, #c2, #c3, #c4, #c5{
+        margin-left:10px;
+        border:solid;
+        border-color:blue;
+        border-width:1px;
+    }
+
+    #c1:hover, #c2:hover, #c3:hover, #c4:hover, #c5:hover{
+        border-color:red;
+        border-width:2px;
+    }
+
+    .combination[readonly]{
+        background-color:rgba(0,0,0,0.8);
+        color:white;
+        font-size:16pt;
+        border-width:0px;
+    }
+
+    /*-----------------------------------------------------------------*/
+
+    .betBtnLobby
+    {
+        transition:500ms;
+        width:200px;
+        border:solid;
+        border-width:1px;
+        border-color: orange;
+        border-radius:5px;
+        background-color:black;
+        color:lime;
+        margin-top:10px;
+    }
+
+    .betBtnLobby:hover
+    {
+        transition:500ms;
+        font-size:22px;
+        font-weight:bold;
+        border-width:2px;
+        border-color:red;
+        color:yellow;
+        background-color:blue;
+    }
+
+    /*-----------------------------------------------------------------*/
+        #plus_1, #plus_2, #plus_3, #plus_4
+        {
+            position:relative; 
+            margin-right:75px; 
+            margin-top:25px;
+            width:50px;
+            height:50px;
+        }
+
+        #plus_1:hover, #plus_2:hover, #plus_3:hover, #plus_4:hover
+        {
+            width:60px;
+            height:60px;
+            margin-right:70px;
+            margin-top:20px;           
+        }
+
+        #plus_5, #plus_6, #plus_7, #plus_8, #plus_9
+        {
+            position:relative; 
+            margin-left:75px; 
+            margin-top:25px;
+            width:50px;
+            height:50px;
+        }
+
+        #plus_5:hover, #plus_6:hover, #plus_7:hover, #plus_8:hover, #plus_9:hover
+        {
+            width:60px;
+            height:60px;
+            margin-left:70px;
+            margin-top:20px;
+        }
+
+        .animatePlus
+        {
+            transition:1s;
+        }
+
+    /*--------------------------------------------------------------------*/
+
+    .pokerscrollbar
+    {
+	    float: left;	
+        overflow-y: scroll;
+    }
+
+    .pokerscrollbar::-webkit-scrollbar
+    {
+	    width: 10px;
+        background-color: transparent;
+    }
+
+    /*статическая полоса*/
+    .pokerscrollbar::-webkit-scrollbar-track
+    {
+        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.8);
+        border-radius: 5px;
+        background-color: #CCCCCC;
+    }
+
+    /*динамическая полоса*/
+    .pokerscrollbar::-webkit-scrollbar-thumb
+    {
+        border-radius: 5px;
+        background-color: rgba(0, 50, 246, 0.8);
+    }
+
+
+    /*-------------------------------------------------------------------*/
+
+    .lbl
+        {
+            position:relative; 
+            font-weight:bold; 
+            font-size:20pt; 
+            display:block; 
+            color:white; 
+            padding:5px 0px 0px 5px;
+        }
+
+        #message
+        {
+            position:relative; 
+            width:300px; 
+            height:40px; 
+            resize:none; 
+            overflow:auto; 
+            top:5px; 
+            left:5px; 
+            display:inline;
+            background-color:rgba(0,0,0,0.8);
+            color:white;
+            border:solid;
+            border-width:1px;
+            border-color:lime;
+            border-radius:5px;
+        }
+        #message:hover
+        {
+            border-color:blue;
+        }
+
+        #send
+        {
+            position:relative; 
+            font-weight:bold; 
+            width:100px; 
+            height:40px; 
+            top:5px; 
+            left:5px; 
+            display:inline;
+            background-color:black;
+            color:lime;
+            border:solid;
+            border-width:1px;
+            border-color:orange;
+            transition:1s;
+        }
+        #send:hover
+        {
+            transition:1s;
+            font-size:15pt;
+            background-color:lime;
+            color:black;
+        }
+
+        #allMessages
+        {
+            position:relative; 
+            width:390px; 
+            height:600px; 
+            overflow:auto; 
+            background:rgba(0,0,0,0.8); 
+            border:1px solid lime; 
+            border-radius:5px; 
+            left:5px;
+        }
+
+        .bank
+        {
+            background-color:rgba(0,0,0,0.8); 
+            color:white; 
+            font-weight:bold; 
+            position:relative; 
+            font-size:10pt;
+            border-radius:5px;
+            display:inline;
+        }
+
+    /*---------------------------------------------------------------------*/
+        .card1
+        {
+            left:5px;
+            width:60px;
+            height:100px;
+            position:relative;
+            -ms-transform: rotate(-5deg);
+            -webkit-transform: rotate(-5deg);
+            transform: rotate(-5deg);
+        }
+
+        .card2
+        {
+            width:60px;
+            height:100px;
+            position:relative;
+            left:-30px;
+            -ms-transform: rotate(5deg);
+            -webkit-transform: rotate(5deg);
+            transform: rotate(5deg);
+        }
+
+        .intClass
+        {
+            background-color:rgba(0,0,0,0.8); 
+            border:solid;
+            border-width:1px;
+            border-color:rgb(207, 203, 203); /*gray*/
+            border-radius:5px; 
+            position:absolute; 
+            padding:5px; 
+            width:200px; 
+            height:100px; 
+            z-index:1;
+        }
+
+        .intClass:hover
+        {
+            background-color:rgba(0, 5, 251, 0.8); /*blue*/
+        }
+
+        .intClass2
+        {
+            background-color:rgba(0,0,0,0.8); 
+            border:solid;
+            border-width:1px;
+            border-color:rgb(207, 203, 203); /*gray*/
+            border-radius:5px; 
+            position:absolute; 
+            padding:5px; 
+            width:200px; 
+            height:100px; 
+            z-index:1;
+        }
+
+    /*----------------------------------------------------------------*/
+
+    .interface
+    {
+        width:100px;
+        height:40px;
+        font-size:12pt;
+        color:orange;
+        background-color:black;
+        border:solid;
+        border-width:1px;
+        border-color:lime;
+        border-radius:5px;
+        display:inline;
+        left:550px;
+        margin-left:10px;
+        position:relative;
+    }
+
+    .interface:hover
+    {
+        font-weight:bold;
+        color:lime;
+        background-color:blue;
+        border-color:yellow;
+    }
+
+    #slider
+    { 
+        background: black; 
+        border-color: lime;
+        color:orange;
+        position:relative; 
+        width:300px;
+    }

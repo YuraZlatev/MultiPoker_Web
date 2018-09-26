@@ -1,0 +1,28 @@
+﻿@Styles.Render("~/Content/styles.css")
+@Scripts.Render("~/Scripts/roomsbet.js");
+
+@{
+    ViewBag.Title = "GameLobby";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Background = "/Images/gamelobby.jpg";
+}
+
+<h2 id="gameName" class="text-center" style="color:white;">@ViewBag.Game.Name</h2>
+<hr />
+
+<div class="form-horizontal jumbotron" style="min-width:1200px; background-color:rgba(0,0,0,0.8); color:white; border:1px solid lime; height:600px; overflow:auto;">
+
+    <div class="text-center col-md-4 col-lg-4" style="height:100%;">
+        <h3 id="nameOfBet" style="color:orange;" class="text-center;">Bet</h3>
+
+        <ul style="list-style-type:none;">
+            <li><button class="betBtnLobby" id="easy" onclick="getRooms(this)">Big Blind - 200</button></li>
+            <li><button class="betBtnLobby" id="normal" onclick="getRooms(this)">Big Blind - 1000</button></li>
+            <li><button class="betBtnLobby" id="hard" onclick="getRooms(this)">Big Blind - 2000</button></li>
+        </ul>
+    </div>
+
+    <div id="roomsbybet" class="col-md-4 col-md-offset-2 col-lg-4 col-lg-offset-4 pokerscrollbar" style="height:100%; overflow:auto;"></div>
+
+</div>
+

@@ -1,0 +1,45 @@
+﻿@model MultiPoker.Models.RegisterViewModel
+@Styles.Render("~/Content/styles.css")
+
+@{
+    ViewBag.Title = "Registration";
+    ViewBag.Background = "/Images/log-register.jpg";
+}
+
+<br/><br/><br/>
+<h2 style="color:white;">@ViewBag.Title</h2>
+<hr />
+
+@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal jumbotron", role = "form", style = "border:1px solid lime; background-color:rgba(0,0,0,0.5); color:white;" }))
+{
+    @Html.AntiForgeryToken()
+    
+    @Html.ValidationSummary("", new { @class = "text-danger"})
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email, new { @class = "col-md-4 control-label" })
+        <div class="col-md-8" style = "margin-top:12px;">
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control pokerTextBox" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Password, new { @class = "col-md-4 control-label" })
+        <div class="col-md-8" style = "margin-top:12px;">
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control pokerTextBox" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-4 control-label" })
+        <div class="col-md-8" style = "margin-top:12px;">
+            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control pokerTextBox" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-4 col-md-8">
+            <input type="submit" class="btn btn-success" value="Registration" />
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

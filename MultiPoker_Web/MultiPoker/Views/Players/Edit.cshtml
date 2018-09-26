@@ -1,0 +1,109 @@
+﻿@model MultiPoker.Models.Player
+@Styles.Render("~/Content/styles.css")
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Background = "/Images/lobby.jpg";
+
+    String image = "";
+    if (Model.Avatar != null)
+    {
+        image = Convert.ToBase64String(@Model.Avatar);
+    }
+}
+
+<br/>
+<h2 style="color:white;">Profile</h2>
+<hr />
+
+@using (Html.BeginForm("Edit", "Players", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal jumbotron" style="min-width:1200px; background-color:rgba(0,0,0,0.8); color:white; border:1px solid lime;">
+        
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nick, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Nick, new { htmlAttributes = new { @class = "form-control pokerTextBox", style = "margin-top:5px;" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Balance, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Balance, new { htmlAttributes = new { @class = "form-control pokerTextBox", ReadOnly = "ReadOnly", style = "margin-top:5px;" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Avatar, htmlAttributes: new { @class = "control-label col-md-2", style = "margin-top:20px;" })
+            <div class="col-md-10">
+                @if (Model.Avatar == null)
+                {
+                    <img src="~/Images/Default_avatar.png" width="100" height="100" alt="def" style="border-radius:50%;" />
+                }
+                else
+                {
+                    <img src="data:image/jpeg;base64,@image" width="100" height="100" alt="pic" style="border-radius:50%;"/>
+                }
+                <input type="file" title="Max 2 MB" name="upload" id="upload" class="form-control" style="background:rgba(0,0,0,0.0); border-color:lime; color:white; margin-top:20px;" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Level, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Level, new { htmlAttributes = new { @class = "form-control pokerTextBox", ReadOnly = "ReadOnly", style = "margin-top:5px;" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Experience, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Experience, new { htmlAttributes = new { @class = "form-control pokerTextBox", ReadOnly = "ReadOnly", style = "margin-top:5px;" } })
+            </div>
+        </div>
+
+        @Html.EditorFor(model => model.Bonus, new { htmlAttributes = new {ReadOnly = "ReadOnly", style = "visibility:hidden;" } })
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-success form-control" style="color:white; font-weight:bold;"/>
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-danger pull-right" data-toggle="modal" data-target="#myModal" style="font-weight:bold;">
+            Delete Account
+        </button>
+    </div>
+}
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="left:0%;">
+        <div class="modal-content" style="background-color:black; color:white; border:1px solid lime;">
+            <div class="modal-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="color:lime;">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h2 class="modal-title" id="myModalLabel">Are you sure ?</h2>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                @Html.ActionLink("Yes", "Delete", new { id = Model.Id }, new { @class = "btn btn-primary" })
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
